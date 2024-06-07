@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import User from "./../models/UserSchema.js";
 
 export const signup = async (req, res) => {
-  const { name, email, password, profession, photo, category } = req.body;
+  const { name, email, password, profession, photo, category, bio } = req.body;
 
   try {
     let user = await User.findOne({ email });
@@ -16,10 +16,21 @@ export const signup = async (req, res) => {
       return res.status(400).json({ message: "User already exist" });
     }
 
-    if (!name || !email || !password || !profession || !category) {
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !profession ||
+      !category ||
+      !photo ||
+      !bio
+    ) {
       return res
         .status(400)
-        .json({ success: false, message: "Please filled all inputs" });
+        .json({
+          success: false,
+          message: "Please filled all inputs dsdfsdfsdfsdfs",
+        });
     }
 
     //make the password hash
@@ -33,6 +44,7 @@ export const signup = async (req, res) => {
       photo,
       category,
       profession,
+      bio,
     });
 
     await user.save();
@@ -58,7 +70,6 @@ export const login = async (req, res) => {
 
     //checking if user exist or not
     if (!user) {
-      console.log("user", user);
       return res.status(404).json({ message: "User not found" });
     }
 

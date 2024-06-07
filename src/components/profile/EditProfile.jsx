@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { BASE_URL, token } from "../../../config";
 
 const EditProfile = ({ profileData }) => {
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: profileData?.name,
     email: profileData?.email,
@@ -12,7 +13,23 @@ const EditProfile = ({ profileData }) => {
     profession: profileData?.profession,
     category: profileData?.category,
     photo: profileData?.photo,
+    bio: profileData?.bio,
   });
+
+  const handleBioInputChange = (e) => {
+    const { name, value } = e.target;
+    const words = value.trim().split(/\s+/);
+
+    if (name === "bio" && words.length > 50) {
+      setError("Bio cannot exceed 50 words");
+    } else {
+      setError("");
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -83,6 +100,18 @@ const EditProfile = ({ profileData }) => {
             aria-readonly
             disabled={true}
           />
+        </div>
+        <div className="mb-5">
+          <textarea
+            type="bio"
+            placeholder="Write a short bio"
+            name="bio"
+            value={formData.bio}
+            required
+            onChange={handleBioInputChange}
+            className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor"
+          />
+          {error && <p className="text-red-500">{error}</p>}
         </div>
 
         <div className="mb-5">

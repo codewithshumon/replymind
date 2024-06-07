@@ -12,8 +12,6 @@ const Profile = () => {
   const { data, loading, error } = useFetchData(`${BASE_URL}/user/profile`);
   const [tab, setTab] = useState("overview");
 
-  console.log("data", data);
-
   return (
     <section>
       <div className="max-w-[1170px] px-5 mx-auto">
@@ -36,7 +34,7 @@ const Profile = () => {
                         />
                       </figure>
 
-                      <div>
+                      <div className="flex flex-col">
                         <span className="bg-[#CCF0F3] text-irisBlueColor py-1 px-4 lg:py-2 lg:px-6 rounded-lg text-[12px] leading-4 lg:text-[16px] lg:leading-6 font-semibold">
                           {data.profession?.toUpperCase() || ""}
                         </span>
@@ -47,6 +45,9 @@ const Profile = () => {
 
                         <p className="text-para font-[15px] lg:max-w-[390px] leading-6">
                           {data.category || ""}
+                        </p>
+                        <p className="text-para text-[13px] lg:max-w-[490px] text-gray-700 leading-2 mt-2">
+                          {data.bio || ""}
                         </p>
                       </div>
                     </div>

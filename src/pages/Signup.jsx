@@ -13,6 +13,7 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,7 +21,23 @@ const Signup = () => {
     photo: selectedFile,
     profession: "",
     category: "",
+    bio: "",
   });
+
+  const handleBioInputChange = (e) => {
+    const { name, value } = e.target;
+    const words = value.trim().split(/\s+/);
+
+    if (name === "bio" && words.length > 50) {
+      setError("Bio cannot exceed 50 words");
+    } else {
+      setError("");
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
 
   const handleInpurChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -79,7 +96,6 @@ const Signup = () => {
     }
   };
 
-  console.log("formData", formData);
   return (
     <section className="px-5 lg:px-0">
       <div className="max-w-[1170px] mx-auto">
@@ -136,6 +152,18 @@ const Signup = () => {
                   onChange={handleInpurChange}
                   className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor"
                 />
+              </div>
+              <div className="mb-5">
+                <textarea
+                  type="bio"
+                  placeholder="Write a short bio"
+                  name="bio"
+                  value={formData.bio}
+                  required
+                  onChange={handleBioInputChange}
+                  className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor"
+                />
+                {error && <p className="text-red-500">{error}</p>}
               </div>
 
               <div className="mb-5 flex flex-col items-start">

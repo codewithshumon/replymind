@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
   },
   category: { type: String, required: true },
   photo: { type: String },
+  bio: { type: String },
 });
 
 export default mongoose.model("User", UserSchema);
