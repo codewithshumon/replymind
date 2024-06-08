@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { BASE_URL, token } from "../../config";
+import { BASE_URL } from "../../config";
 import useFetchData from "../hooks/useFetchData";
 import Error from "../components/error/Error";
 import Loading from "../components/loader/Loading";
